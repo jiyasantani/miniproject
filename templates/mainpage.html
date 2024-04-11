@@ -13,7 +13,7 @@
 		}
 		h1 {
 			background-color: lightgreen;
-			color: white;
+			color: black;
 			padding: 20px;
 		}
 		form {
@@ -21,7 +21,7 @@
 		}
 		input[type="submit"], label {
 			background-color: lightgreen;
-			color: white;
+			color: black;
 			padding: 10px;
 			border: none;
 			border-radius: 5px;
@@ -88,7 +88,7 @@
     
       {% if musclegainfoods %}
       <h2>Filtered Foods</h2>
-      <p>Here are 5 random foods from the "Muscle_Gain" category:</p>
+      <p>Here are 5 foods from the "Muscle_Gain" category:</p>
       <ul>
         {% for item in musclegainfoods.split('\n') %}
           <li>{{ item }}</li>
@@ -125,7 +125,7 @@
     
       {% if weightlossfoods %}
       <h2>Filtered Foods</h2>
-      <p>Here are 5 random foods from the "Muscle_Gain" category:</p>
+      <p>Here are 5 foods from the "Muscle_Gain" category:</p>
       <ul>
         {% for item in weightlossfoods.split('\n') %}
           <li>{{ item }}</li>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendation</title>
+</head>
+<body>
+    <h1>Recommendation</h1>
+    <div>
+        <h2>Body Mass Index (BMI): {{ bmi }}</h2>
+        <h2>Maintain Calories: {{ calories }}</h2>
+    </div>
+    <div>
+        {% for meal_name, recipe_name, recipe_nutrition in recommendations %}
+            <h3>{{ meal_name }}</h3>
+            {% if recipe_name == "No recipe found matching the calorie range." %}
+                <p>No recipe found matching the calorie range.</p>
+            {% else %}
+                <p>Name: {{ recipe_name }}</p>
+
+                <p>Nutritional Values (g):</p>
+                <table>
+                    <tr>
+                        <th>Calories</th>
+                        <th>FatContent</th>
+                        <th>SaturatedFatContent</th>
+                        <th>CholesterolContent</th>
+                        <th>SodiumContent</th>
+                        <th>CarbohydrateContent</th>
+                        <th>FiberContent</th>
+                        <th>SugarContent</th>
+                        <th>ProteinContent</th>
+                    </tr>
+                    <tr>
+                        {% for key, value in recipe_nutrition.items() %}
+                            <td>{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                </table>
+
+            {% endif %}
+        {% endfor %}
+    </div>
+
+</body>
+</html>
