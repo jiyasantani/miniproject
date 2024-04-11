@@ -3,6 +3,8 @@ import pickle
 import pandas as pd
 import csv
 app = Flask(__name__)
+
+
 with open('food_model.pickle', 'rb') as file:
     model = pickle.load(file)
 food_data = pd.read_csv('done_food_data.csv')
@@ -13,9 +15,35 @@ def read_csv(file_path, sort_by='Descrip'):
         sorted_rows = sorted(rows, key=lambda x: x[sort_by])
         return sorted_rows
 
+# @app.route("/")
+# def index():
+#     return render_template("mainpage.html")
+
 @app.route("/")
 def index():
+    return render_template("bmi_calculator.html")
+
+@app.route("/calculate_bmi", methods=['POST'])
+def calculate_bmi():
+    # Get user input from the form
+    age = int(request.form['age'])
+    height = float(request.form['height'])
+    weight = float(request.form['weight'])
+    
+    bmi = round(weight / ((height / 100) ** 2), 2)
+
+    # Calculate recommended calories, protein, and fats (just for demonstration)
+    recommended_calories = round(25 * weight + 10 * height - 5 * age + 5, 2)
+    recommended_protein = round(0.8 * weight, 2)
+    recommended_fats = round(0.25 * recommended_calories / 9, 2)
+
+    return render_template("bmi_calculator.html", bmi=bmi, calories=recommended_calories,
+                           protein=recommended_protein, fats=recommended_fats)
+
+@app.route("/mainpage")
+def mainpage():
     return render_template("mainpage.html")
+
 
 @app.route("/predict", methods=['POST'])
 def predict():
@@ -33,9 +61,9 @@ def predict():
     # format the prediction as a string
     if prediction[0] == 'Muscle_Gain':
         result = 'Muscle Gain'
-    if prediction[0] == 'Weight_Gain':
+    elif prediction[0] == 'Weight_Gain':
         result = 'Weight Gain'
-    if prediction[0] == 'Weight_Loss':
+    elif prediction[0] == 'Weight_Loss':
         result = 'Weight Loss'
     else:
         result = 'General food'
